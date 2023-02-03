@@ -19,7 +19,7 @@ namespace ETicaretAPI.Persistence.Repositories
             _context = context;
         }
 
-        public Microsoft.EntityFrameworkCore.DbSet<T> Table => _context.Set<T>();
+        public DbSet<T> Table => _context.Set<T>();
 
         public IQueryable<T> GetAll(bool tracking = true)
         {
@@ -44,7 +44,7 @@ namespace ETicaretAPI.Persistence.Repositories
         {
             var query = Table.AsQueryable();
             if(!tracking)
-                query = query.AsNoTracking();
+                query = Table.AsNoTracking();
             return await query.FirstOrDefaultAsync(method);
         }
             
@@ -54,7 +54,7 @@ namespace ETicaretAPI.Persistence.Repositories
         {
             var query = Table.AsQueryable();
             if(!tracking)
-                query = query.AsNoTracking();
+                query = Table.AsNoTracking();
             return await query.FirstOrDefaultAsync(x => x.Id == Guid.Parse(id));
         }
             

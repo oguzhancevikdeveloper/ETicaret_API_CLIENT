@@ -1,6 +1,7 @@
 ﻿using ETicaretAPI.Application.Repositories;
 using ETicaretAPI.Domain.Entities.Common;
 using ETicaretAPI.Persistence.Contexts;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
@@ -51,14 +52,16 @@ namespace ETicaretAPI.Persistence.Repositories
             return Remove(model);
         }
 
-
         public bool Update(T model)
         {
             EntityEntry<T> entityEntry = Table.Update(model);
             return entityEntry.State == EntityState.Modified;
         }
         public async Task<int> SaveAsync()
-            => await _context.SaveChangesAsync();
+        {
+            return await _context.SaveChangesAsync();
+        }
+            
 
     }
 }
